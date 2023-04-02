@@ -45,12 +45,12 @@ func TestAvatarRepo_Create(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer func() {
+	defer func(id int64) {
 		err = repo.Delete(avatar.ID)
 		if err != nil {
 			t.Log(err)
 		}
-	}()
+	}(avatar.ID)
 
 	got, err := repo.GetByID(avatar.ID)
 	if err != nil {
@@ -69,12 +69,12 @@ func TestAvatarRepo_Create(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	defer func() {
+	defer func(id int64) {
 		err = repo.Delete(avatar.ID)
 		if err != nil {
 			t.Log(err)
 		}
-	}()
+	}(avatar.ID)
 
 	got, err = repo.GetByID(avatar.ID)
 	if err != nil {
