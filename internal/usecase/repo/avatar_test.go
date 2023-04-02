@@ -23,13 +23,7 @@ func TestMain(m *testing.M) {
 
 	repo = NewAvatarRepo(db)
 
-	var code int
-	for {
-		code = m.Run()
-		if code != 0 {
-			break
-		}
-	}
+	code := m.Run()
 
 	db.Close()
 
@@ -45,6 +39,12 @@ func TestAvatarRepo_Create(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer func(id int64) {
+		err = repo.Delete(id)
+		if err != nil {
+			t.Log(err)
+		}
+	}(avatar.ID)
 
 	got, err := repo.GetByID(avatar.ID)
 	if err != nil {
@@ -63,6 +63,12 @@ func TestAvatarRepo_Create(t *testing.T) {
 		t.Error(err)
 		return
 	}
+	defer func(id int64) {
+		err = repo.Delete(id)
+		if err != nil {
+			t.Log(err)
+		}
+	}(avatar.ID)
 
 	got, err = repo.GetByID(avatar.ID)
 	if err != nil {

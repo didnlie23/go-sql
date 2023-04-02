@@ -19,7 +19,7 @@ func NewAvatarRepo(db *sql.DB) *AvatarRepo {
 func (r *AvatarRepo) Create(nickname string, profile *string) (*entity.Avatar, error) {
 	result, err := r.db.Exec("insert into avatars (nickname, profile) values (?, ?)", nickname, profile)
 	if err != nil {
-		return nil, err
+		return nil, err // https://github.com/go-gorm/gorm/issues/4037
 	}
 
 	id, err := result.LastInsertId()
