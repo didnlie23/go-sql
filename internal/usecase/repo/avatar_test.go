@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"testing"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var repo *AvatarRepo
